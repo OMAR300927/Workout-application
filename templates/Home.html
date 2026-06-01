@@ -1,0 +1,71 @@
+{% extends "Base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+    <div class="home-background">
+        <h2 class="table-name">Workout Program</h2>
+        <table class="workout-table">
+            <tr>
+                <th>Exercise Name</th>
+                <th>Wights</th>
+                <th>sets</th>
+                <th>Reps</th>
+                <th>Rest Time</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+
+            {% if workouts |length == 0 %}
+                <tr>
+                    <td colspan="7">No workout yet</td>
+                </tr>
+            {% else %}
+
+                {% for workout in workouts %}
+                    <tr>
+                        <td>{{ workout.exercise_name }}</td>
+                        <td>{{ workout.wights }}</td>
+                        <td>{{ workout.sets }}</td>
+                        <td>{{ workout.reps }}</td>
+                        <td>{{ workout.rest_time }}</td>
+                        <td>
+                            <img src="{{ workout.image }}">
+                        </td>
+
+                        <td>
+                            <form action="{{ request.url_for('update_page', workout_id=workout.id) }}" method="get">
+                                <button class="action-btn" type="submit">Update</button>
+                            </form>
+
+                            <form action="{{ request.url_for('delete_workout', workout_id=workout.id) }}" method="post">
+                                <button class="action-btn" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+
+        <br>
+        <hr>
+
+        <div class="add-workout">
+            <h3>Add new workout</h3>
+            <form class="new-workout-form" action="{{ request.url_for('add_workout') }}" method="post" enctype="multipart/form-data">
+                <input type="text" name="exercise_name" placeholder="Write your exercise_name">
+                <input type="text" name="wights" placeholder="Write your wights">
+                <input type="text" name="sets" placeholder="Write the number of sets">
+                <input type="text" name="reps" placeholder="Write the number of reps">
+                <input type="text" name="rest_time" placeholder="Write your rest time">
+                
+                <input class="add-image" type="file" name="file">
+
+                <button type="submit">Add workout</button>
+            </form>
+            
+        </div>
+
+        <a href="{{ url_for('logout') }}">logout</a>
+    </div>
+{% endblock %}

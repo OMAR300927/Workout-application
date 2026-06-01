@@ -1,0 +1,20 @@
+{% extends "Base.html" %}
+
+{% block title %}Update page{% endblock %}
+
+{% block content %}
+    <div class="register-login-update-container">
+        <h2>Update your workout</h2>
+        <form action="{{ request.url_for('update_workout', workout_id=workout.id) }}" method="post" enctype="multipart/form-data">
+            <input type="text" name="exercise_name" value="{{ workout.exercise_name }}" placeholder="Write your exercise_name">
+            <input type="text" name="wights" value="{{ workout.wights }}" placeholder="Write your wights">
+            <input type="text" name="sets" value="{{ workout.sets }}" placeholder="Write the number of sets">
+            <input type="text" name="reps" value="{{ workout.reps }}" placeholder="Write the number of reps">
+            <input type="text" name="rest_time" value="{{ workout.rest_time }}" placeholder="Write your rest time">
+            
+            <input type="file" name="file">
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+{% endblock %}
